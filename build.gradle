@@ -6,17 +6,20 @@ buildscript {
 
   dependencies {
     classpath "org.asciidoctor:asciidoctor-gradle-plugin:1.5.2"
+    classpath 'pl.allegro.tech.build:axion-release-plugin:1.3.3'
   }
 }
 
 apply plugin: "base"
 apply plugin: "org.asciidoctor.convert"
+apply plugin: 'pl.allegro.tech.build.axion-release'
 
 description = "Spock Framework"
 
 ext {
   variants = [2.0, 2.3, 2.4]
-  variant = System.getProperty("variant") as BigDecimal ?: variants.first()
+//  variant = System.getProperty("variant") as BigDecimal ?: variants.first()
+  variant = System.getProperty("variant") as BigDecimal ?: variants.last()
   if (variant == 2.0) {
     groovyVersion = "2.0.8"
     minGroovyVersion = "2.0.0"
@@ -34,10 +37,11 @@ ext {
   }
   javaVersions = [1.6, 1.7, 1.8]
   javaVersion = System.getProperty("java.specification.version") as BigDecimal
-  baseVersion = "1.1"
-  snapshotVersion = true
-  fullVersion = "$baseVersion-groovy-$variant" + (snapshotVersion ? "-SNAPSHOT" : "")
-  variantLessVersion = baseVersion + (snapshotVersion ? "-SNAPSHOT" : "")
+//  baseVersion = "1.1"
+//  baseVersion = project.version
+//  snapshotVersion = true
+//  fullVersion = "$baseVersion-groovy-$variant" + (snapshotVersion ? "-SNAPSHOT" : "")
+//  variantLessVersion = baseVersion + (snapshotVersion ? "-SNAPSHOT" : "")
   libs = [
     jetbrainsAnnotations: "org.jetbrains:annotations:13.0",
     ant: "org.apache.ant:ant:1.9.4",
@@ -49,6 +53,34 @@ ext {
     log4j: "log4j:log4j:1.2.17",
     objenesis: "org.objenesis:objenesis:2.1"
   ]
+}
+
+scmVersion {
+  tag {
+    prefix = 'release'
+    versionSeparator = '/'
+  }
+  createReleaseCommit = true	//TODO: Still needed with fileUpdate hooks?
+  releaseCommitMessage { version, position -> "Release version: ${version}\n\n[ci skip]" }
+  versionIncrementer 'incrementPrerelease'
+}
+
+String calculateFullVersion(String baseVersion) {
+  if (baseVersion.endsWith('-SNAPSHOT')) {
+    return baseVersion - '-SNAPSHOT' + '-' + variant + '-SNAPSHOT'
+  }
+  return baseVersion + '-' + variant
+}
+
+ext {
+  baseVersion = scmVersion.version
+  fullVersion = calculateFullVersion(baseVersion)
+  //(base)version would be 1.1.0-rc1(-SNAPSHOT) - full version (used in the projects) 1.1.0-rc1-groovy-2.3(-SNAPSHOT) - maybe 
+/*
+  baseVersion - wywalamy SNAPSHOT, dodajemy variant i dorzucamy SNAPSHOT, jezeli byl
+*/
+  variantLessVersion = baseVersion	//TODO: Remove
+  snapshotVersion = project.version.endsWith('SNAPSHOT')
 }
 
 allprojects {
@@ -76,6 +108,7 @@ subprojects {
   targetCompatibility = javaVersions.min()
 
   sourceSets.all { ss ->
+    //TODO: Why it fails with "java.lang.String cannot be cast to java.math.BigDecimal" for -Pvariant=2.4?
     for (v in variants.findAll { it <= variant } ) {
       java {
         srcDir "src/$ss.name$v/java"
