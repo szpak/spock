@@ -90,4 +90,5 @@ modifyPom { pom ->
   pom.dependencies.removeAll { it.scope == "test" }
 }
 
-deployers*.beforeDeployment { signing.signPom(it) }
+//TODO: Restore before merge
+//deployers*.beforeDeployment { signing.signPom(it) }
