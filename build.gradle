@@ -18,8 +18,8 @@ description = "Spock Framework"
 
 ext {
   variants = [2.0, 2.3, 2.4]
-//  variant = System.getProperty("variant") as BigDecimal ?: variants.first()
-  variant = System.getProperty("variant") as BigDecimal ?: variants.last()
+  variant = System.getProperty("variant") as BigDecimal ?: variants.first()
+//  variant = System.getProperty("variant") as BigDecimal ?: variants.last()
   if (variant == 2.0) {
     groovyVersion = "2.0.8"
     minGroovyVersion = "2.0.0"
@@ -60,27 +60,26 @@ scmVersion {
     prefix = 'release'
     versionSeparator = '/'
   }
-  createReleaseCommit = true	//TODO: Still needed with fileUpdate hooks?
+//TODO: Add pushReleaseCommit task next to pushTag
+//  createReleaseCommit = true	//TODO: Still needed with fileUpdate hooks?
   releaseCommitMessage { version, position -> "Release version: ${version}\n\n[ci skip]" }
   versionIncrementer 'incrementPrerelease'
 }
 
 String calculateFullVersion(String baseVersion) {
+  //TODO: Regexp na (.*)(-SNAPSHOT|) -> {1}-groovy-2.3{2}?
   if (baseVersion.endsWith('-SNAPSHOT')) {
-    return baseVersion - '-SNAPSHOT' + '-' + variant + '-SNAPSHOT'
+    return baseVersion - '-SNAPSHOT' + "-groovy-$variant-SNAPSHOT"
   }
-  return baseVersion + '-' + variant
+  return baseVersion + "-groovy-$variant"
 }
 
 ext {
   baseVersion = scmVersion.version
   fullVersion = calculateFullVersion(baseVersion)
   //(base)version would be 1.1.0-rc1(-SNAPSHOT) - full version (used in the projects) 1.1.0-rc1-groovy-2.3(-SNAPSHOT) - maybe 
-/*
-  baseVersion - wywalamy SNAPSHOT, dodajemy variant i dorzucamy SNAPSHOT, jezeli byl
-*/
   variantLessVersion = baseVersion	//TODO: Remove
-  snapshotVersion = project.version.endsWith('SNAPSHOT')
+  snapshotVersion = project.version.endsWith('-SNAPSHOT')
 }
 
 allprojects {
@@ -180,7 +179,8 @@ if (gradle.startParameter.taskNames == ["travisCiBuild"]) {
       maxParallelForks = 2
     }
   }
-  if (System.getenv("TRAVIS_PULL_REQUEST") == "false") {
+  //TODO: Replace "cdBetas" with "master"
+  if (System.getenv("TRAVIS_PULL_REQUEST") == "false" && System.getenv("TRAVIS_BRANCH") == "cdBetas") {
     if (javaVersion == javaVersions.min()) {
       gradle.startParameter.taskNames += ["uploadArchives"]
     }
@@ -189,6 +189,7 @@ if (gradle.startParameter.taskNames == ["travisCiBuild"]) {
         gradle.startParameter.taskNames += ["publishJavadoc", "publishDocs"]
         if (!snapshotVersion) {
           gradle.startParameter.taskNames += ["tagRelease"]
+          //TODO: Add closeAndPromoteRepository task + proper finalizedBy
         }
       }
     }
@@ -266,9 +267,9 @@ task tagRelease(type: Exec) {
   git config user.email "dev@forum.spockframework.org"
   git config user.name "Spock Framework Robot"
   git checkout master
-  git tag spock-$baseVersion
   git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/spockframework/spock.git" spock-$baseVersion > /dev/null 2>&1
 """
+//Removed 'git tag spock-$baseVersion' before push
 }
 
 task javadoc(type: Javadoc) {
