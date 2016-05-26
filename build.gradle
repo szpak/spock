@@ -35,7 +35,7 @@ ext {
   } else {
     throw new InvalidUserDataException("Unknown variant: $variant. Choose one of: $variants")
   }
-  javaVersions = [1.6, 1.7, 1.8]
+  javaVersions = [1.7, 1.8]
   javaVersion = System.getProperty("java.specification.version") as BigDecimal
 //  baseVersion = "1.1"
 //  baseVersion = project.version
