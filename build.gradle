@@ -194,7 +194,6 @@ if (gradle.startParameter.taskNames == ["travisCiBuild"]) {
         if (!snapshotVersion) {
           gradle.startParameter.taskNames += ["tagRelease"]
 //          gradle.startParameter.taskNames += ["tagRelease", "closeRepository"]
-//          
           //TODO: Add closeAndPromoteRepository task + proper finalizedBy
         }
       }
@@ -272,9 +271,10 @@ task tagRelease(type: Exec) {
 """
   git config user.email "szpak-ci@example.com"
   git config user.name "Spock Framework Robot"
-  git checkout master
+  git checkout feature/cdBetas
   git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" spock-$baseVersion > /dev/null 2>&1
 """
+//Restore `git checkout master` before merge
 //Removed 'git tag spock-$baseVersion' before push
 }
 
