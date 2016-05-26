@@ -51,10 +51,11 @@ install {
 uploadArchives {
   deployers << repositories.mavenDeployer {
     snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-      authentication(userName: "pniederw", password: System.getenv("SONATYPE_OSS_PASSWORD"))
+//TODO: Restore before merge
+      authentication(userName: System.getenv("SONATYPE_OSS_USERNAME"), password: System.getenv("SONATYPE_OSS_PASSWORD"))
     }
     repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-      authentication(userName: "pniederw", password: System.getenv("SONATYPE_OSS_PASSWORD"))
+      authentication(userName: System.getenv("SONATYPE_OSS_USERNAME"), password: System.getenv("SONATYPE_OSS_PASSWORD"))
     }
   }
 }

@@ -85,7 +85,8 @@ ext {
 allprojects {
   ext.displayName = null
 
-  group = "org.spockframework"
+//  group = "org.spockframework"
+  group = "info.solidsoft.spock.cdtest"
   version = fullVersion
 
   apply from: script("common")
@@ -136,7 +137,9 @@ subprojects {
   }
 
   signArchives {
-    onlyIf { gradle.taskGraph.hasTask(uploadArchives) }
+//    onlyIf { gradle.taskGraph.hasTask(uploadArchives) }
+//TODO: Restore before merge
+    onlyIf { false }
   }
 
   ext."signing.keyId" = "2EA0A67F"
@@ -186,7 +189,8 @@ if (gradle.startParameter.taskNames == ["travisCiBuild"]) {
     }
     if (javaVersion == javaVersions.max()) {
       if (variant == variants.max()) {
-        gradle.startParameter.taskNames += ["publishJavadoc", "publishDocs"]
+//TODO: Restore before merge
+//        gradle.startParameter.taskNames += ["publishJavadoc", "publishDocs"]
         if (!snapshotVersion) {
           gradle.startParameter.taskNames += ["tagRelease"]
           //TODO: Add closeAndPromoteRepository task + proper finalizedBy
@@ -240,7 +244,7 @@ task publishJavadoc(type: Exec) {
   cp -r build/javadoc/$variantLessVersion javadoc/
   git add javadoc
   git commit -qm "Publish javadoc/$variantLessVersion"
-  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/spockframework/spock.git" gh-pages > /dev/null 2>&1
+  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" gh-pages > /dev/null 2>&1
   git checkout master
 """
 }
@@ -257,17 +261,17 @@ task publishDocs(type: Exec) {
   cp -r build/asciidoc/html5/* docs/$variantLessVersion
   git add docs
   git commit -qm "Publish docs/$variantLessVersion"
-  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/spockframework/spock.git" gh-pages > /dev/null 2>&1
+  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" gh-pages > /dev/null 2>&1
   git checkout master
 """
 }
 task tagRelease(type: Exec) {
   commandLine "sh", "-c",
 """
-  git config user.email "dev@forum.spockframework.org"
+  git config user.email "szpak-ci@example.com"
   git config user.name "Spock Framework Robot"
   git checkout master
-  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/spockframework/spock.git" spock-$baseVersion > /dev/null 2>&1
+  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" spock-$baseVersion > /dev/null 2>&1
 """
 //Removed 'git tag spock-$baseVersion' before push
 }
