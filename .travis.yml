@@ -43,7 +43,7 @@ matrix:
 install: true
 
 #Restore before merge
-script: ./gradlew createRelease -i && ./gradlew travisCiBuild -Dvariant=$VARIANT -x test
+script: ./gradlew createRelease -i -Prelease.disableRemoteCheck && ./gradlew travisCiBuild -Dvariant=$VARIANT -x test
 
 notifications:
   slack:
