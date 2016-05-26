@@ -19,10 +19,12 @@ env:
   global:
     # SIGNING_PASSWORD
     - secure: "GBvPdDAaMfr0iAYHzVxhMIBVHFanEPY+69CbEFijbZjhv8h0FPvuLos2p1K5/hbmNkQ1Hd2+CHsm3ErvXQHXtpXn0HmKvzSP7pnPk83iRNVGPieasvfnKiSohZeEplkAK6kbK8sZbjJRUFqUZtwyPtWfs244rCOo++D3KtfggzQ="
+    # SONATYPE_OSS_USERNAME
+    - secure: "b5c8SVcioPqKwg1IXgoqPTyJHE2LXeNwNUYHI5a1mDdZsRbphPuYHjTtRvhpVAjPKeSpocubwarna2jjnmnJ0cOa17tcBQAz8Srj6NolgiL5xjqAhDajUpDaPuDIxGfmPD+ApVNidTJovJQLA3eLI36Bzp4sdQmDEKBusCbuZcc="
     # SONATYPE_OSS_PASSWORD
-    - secure: "Y2PbI07I8M8k1qkwN671HdcLPPpnjATWya/m4PDIICioXkkdJrQzpj5x57efAJEWx2upI8PpgGm8ekUd2F/6l1rq0n4DnGHwGTNe1PDAXUw5qFt66RnqrfIVh2eUvPuQk6bXczLV39GksqqD1T/HS6KofknXpHKzk/JeCiiGoxI="
+    - secure: "KIrlWrB7LsWxtiRnOSCbSqXvNAitks87IBV7++sNlB5S/i3Ut+imhEKhPKv2/g0fU+j+jv9qmBd5Gq+hMKSQ8b+HMteajlfd+U39o/1zN+PJAVwtLRIQ+7n156A4dDXuVeiskjVs1ubvNUfdTsguvM4MzPaBt4XUbmzu0m0HfBU="
     # GITHUB_TOKEN
-    - secure: "YhBI9LWk4AlRSOmt0aBo0TphuVIzHIVdPGClg35S1b2I6xbc0gRIVXb+ySBZIhFkqaicPFTjO2FXerXEr6SJwz5y3LvA5oBWJC4U/9FdegoP9PopZwiAKA0KLTuBMFrTAjTHAmwJePO7a8yqNCbjKfwEc9hbM64YU+sSXdUJfEU="
+    - secure: "EyMgciFZ3s2fHRjjpMq5jA9U9SHgVD1JIcEcOpkAIvglYHDzI0gevlHCDdV9+4YRgiOUhpSAJ+jh1PuhWIOinaD8leDy068IiZxV9reu1F8jVXBb71ElayzisKmVYyMc01V+qsF/rcY1c4G84qbNBfDx+MW6SG/Ur3PYuiiNK6w="
 
 matrix:
   exclude:
