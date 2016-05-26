@@ -20,11 +20,11 @@ env:
     # SIGNING_PASSWORD
     - secure: "GBvPdDAaMfr0iAYHzVxhMIBVHFanEPY+69CbEFijbZjhv8h0FPvuLos2p1K5/hbmNkQ1Hd2+CHsm3ErvXQHXtpXn0HmKvzSP7pnPk83iRNVGPieasvfnKiSohZeEplkAK6kbK8sZbjJRUFqUZtwyPtWfs244rCOo++D3KtfggzQ="
     # SONATYPE_OSS_USERNAME
-    - secure: "b5c8SVcioPqKwg1IXgoqPTyJHE2LXeNwNUYHI5a1mDdZsRbphPuYHjTtRvhpVAjPKeSpocubwarna2jjnmnJ0cOa17tcBQAz8Srj6NolgiL5xjqAhDajUpDaPuDIxGfmPD+ApVNidTJovJQLA3eLI36Bzp4sdQmDEKBusCbuZcc="
+    - secure: "anBi55oiDZyi1HojzTktATdcF63+4Ch9OQ8uZM2yAMVJdJ7hZ/m8u2ntKTpPWDbvuyN/XDLMAny5w/2B+Y2p8vztO9QDqxMNDDhzoGD2L2X0cVV6GMWnY49g+mYcmm3Y8u7dCBsjhVaP5fsW9HFL0m5cLKgyP/t80MNnSF2E+gA="
     # SONATYPE_OSS_PASSWORD
-    - secure: "KIrlWrB7LsWxtiRnOSCbSqXvNAitks87IBV7++sNlB5S/i3Ut+imhEKhPKv2/g0fU+j+jv9qmBd5Gq+hMKSQ8b+HMteajlfd+U39o/1zN+PJAVwtLRIQ+7n156A4dDXuVeiskjVs1ubvNUfdTsguvM4MzPaBt4XUbmzu0m0HfBU="
+    - secure: "czpRxFlTAW7bG/IllHlJ0fMm0SNkrYV+W14LwP1Et8thIHYhkU7ugbI8v9jsgBKEMT/m1hNNMq6iV2sMQc9fqRFXyXuLw2AhvIKMJvTQJ79M7dluB8fQsH151DICNGgTnwse+bMBxYQNhL4eYBrM8syVnVtav7LGUZSB7tbZT/g="
     # GITHUB_TOKEN
-    - secure: "EyMgciFZ3s2fHRjjpMq5jA9U9SHgVD1JIcEcOpkAIvglYHDzI0gevlHCDdV9+4YRgiOUhpSAJ+jh1PuhWIOinaD8leDy068IiZxV9reu1F8jVXBb71ElayzisKmVYyMc01V+qsF/rcY1c4G84qbNBfDx+MW6SG/Ur3PYuiiNK6w="
+    - secure: "DklZVyzWU6hpD6HOTxcncGyuHKXrRPB6d2EIDfgECMwvnIRD6fSPEVeKSWsdOadMk7gmEghFANUdDF77FvgHagMVLb0rHc6oIsXw7CL5ga4GTSr2K++E+aaplixwlRAc+oT0nkiiZ7HAOdZPSbipoMfiBYeljqJCyN0KOWSfyWI="
 
 matrix:
   exclude:
