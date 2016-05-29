@@ -176,8 +176,7 @@ subprojects {
 }
 
 if (gradle.startParameter.taskNames == ["prepareForTravisCiBuild"]) {
-  task emptyPlaceholder {}
-  gradle.startParameter.taskNames = ["emptyPlaceholder"]
+  gradle.startParameter.taskNames = ["currentVersion"]
   //TODO: Replace "cdBetas" with "master"
   if (System.getenv("TRAVIS_PULL_REQUEST") == "false" && System.getenv("TRAVIS_BRANCH") == "feature/cdBetas") {
     if (javaVersion == javaVersions.min() && variant == variants.max()) {
