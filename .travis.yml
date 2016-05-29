@@ -43,7 +43,7 @@ matrix:
 install: true
 
 #Restore before merge
-script: ./gradlew prepareForTravisCiBuild -i -Dvariant=$VARIANT && ./gradlew travisCiBuild -Dvariant=$VARIANT -x test
+script: ./gradlew prepareForTravisCiBuild -i -Dvariant=$VARIANT && ./gradlew travisCiBuild -Dvariant=$VARIANT -x test -i
 
 notifications:
   slack:
