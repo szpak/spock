@@ -175,6 +175,18 @@ subprojects {
   }
 }
 
+if (gradle.startParameter.taskNames == ["prepareForTravisCiBuild"]) {
+  task emptyPlaceholder {}
+  gradle.startParameter.taskNames = ["emptyPlaceholder"]
+  //TODO: Replace "cdBetas" with "master"
+  if (System.getenv("TRAVIS_PULL_REQUEST") == "false" && System.getenv("TRAVIS_BRANCH") == "feature/cdBetas") {
+    if (javaVersion == javaVersions.min() && variant == variants.max()) {
+      project.ext["release.disableRemoteCheck"] = true	//TODO: Switch to setting in task properties
+      gradle.startParameter.taskNames = ["createRelease"]
+    }
+  }
+}
+
 if (gradle.startParameter.taskNames == ["travisCiBuild"]) {
   gradle.startParameter.taskNames = ["build"]
   subprojects {
