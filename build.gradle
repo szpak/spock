@@ -79,7 +79,7 @@ ext {
   fullVersion = calculateFullVersion(baseVersion)
   //(base)version would be 1.1.0-rc1(-SNAPSHOT) - full version (used in the projects) 1.1.0-rc1-groovy-2.3(-SNAPSHOT) - maybe 
   variantLessVersion = baseVersion	//TODO: Remove
-  snapshotVersion = project.version.endsWith('-SNAPSHOT')
+  snapshotVersion = baseVersion.endsWith('-SNAPSHOT')
 }
 
 allprojects {
