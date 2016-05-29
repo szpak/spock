@@ -92,3 +92,10 @@ modifyPom { pom ->
 
 //TODO: Restore before merge
 //deployers*.beforeDeployment { signing.signPom(it) }
+
+nexusStaging {
+    numberOfRetries = 20
+    username = hasProperty('nexusUsername') ? getProperty('nexusUsername') : System.env.SONATYPE_OSS_USERNAME
+    password = hasProperty('nexusPassword') ? getProperty('nexusPassword') : System.env.SONATYPE_OSS_PASSWORD
+}
+

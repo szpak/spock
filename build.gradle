@@ -295,9 +295,6 @@ task tagRelease(type: Exec) {
 //Removed 'git tag spock-$baseVersion' before push
 }
 
-tagRelease.mustRunAfter closeRepository
-promoteRepository.mustRunAfter tagRelease
-
 task javadoc(type: Javadoc) {
   title "Spock Framework API Documentation ($variantLessVersion)"
   destinationDir file("build/javadoc/$variantLessVersion")
@@ -346,6 +343,6 @@ def configureGroovydoc(task) {
   }
 }
 
-nexusStaging {
-    numberOfRetries = 20
-}
+tagRelease.mustRunAfter closeRepository
+promoteRepository.mustRunAfter tagRelease
+
