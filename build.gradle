@@ -186,16 +186,19 @@ if (gradle.startParameter.taskNames == ["travisCiBuild"]) {
   if (System.getenv("TRAVIS_PULL_REQUEST") == "false" && System.getenv("TRAVIS_BRANCH") == "feature/cdBetas") {
     if (javaVersion == javaVersions.min()) {
       gradle.startParameter.taskNames += ["uploadArchives"]
-    }
-    if (javaVersion == javaVersions.max()) {
       if (variant == variants.max()) {
-//TODO: Restore before merge
-//        gradle.startParameter.taskNames += ["publishJavadoc", "publishDocs"]
         if (!snapshotVersion) {
           gradle.startParameter.taskNames += ["tagRelease"]
 //          gradle.startParameter.taskNames += ["tagRelease", "closeRepository"]
           //TODO: Add closeAndPromoteRepository task + proper finalizedBy
         }
+      }
+    }
+    if (javaVersion == javaVersions.max()) {
+      if (variant == variants.max()) {
+//TODO: Restore before merge
+//        gradle.startParameter.taskNames += ["publishJavadoc", "publishDocs"]
+//TODO: Would it be a problem to do it with javaVersions.min()? Should Javadocs for snapshot published?
       }
     }
   }
