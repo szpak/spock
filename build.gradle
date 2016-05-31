@@ -284,12 +284,11 @@ task publishDocs(type: Exec) {
 """
 }
 task tagRelease(type: Exec) {
-  logging.captureStandardOutput LogLevel.LIFECYCLE
   commandLine "sh", "-c",
 """
   git config user.email "szpak-ci@example.com"
   git config user.name "Spock Framework Robot"
-  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" HEAD:refs/heads/feature/cdBetas --follow-tags > /dev/null 2>&1
+  git push -q "https://\$GITHUB_TOKEN@github.com/szpak/spock.git" HEAD:refs/heads/feature/cdBetas --follow-tags > /dev/null 2>&1
 """
 //Restore `git checkout master` before merge
 //Removed 'git tag spock-$baseVersion' before push
