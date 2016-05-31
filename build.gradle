@@ -182,6 +182,7 @@ if (gradle.startParameter.taskNames == ["prepareForTravisCiBuild"]) {
   gradle.startParameter.taskNames = ["currentVersion"]
   //TODO: Replace "cdBetas" with "master"
   if (System.getenv("TRAVIS_PULL_REQUEST") == "false" && System.getenv("TRAVIS_BRANCH") == "feature/cdBetas") {
+    logger.info("TRAVIS_COMMIT: ${System.getenv("TRAVIS_COMMIT")}, TRAVIS_COMMIT_MSG: ${System.getenv("TRAVIS_COMMIT_MSG")}")
     if (System.getenv("TRAVIS_COMMIT_MSG")?.contains(releaseTriggeringCommand)) {
       if (javaVersion == javaVersions.min() && variant == variants.max()) {
         project.ext["release.disableRemoteCheck"] = true	//TODO: Switch to setting in task properties
