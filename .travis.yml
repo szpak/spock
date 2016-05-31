@@ -23,7 +23,7 @@ env:
     # SONATYPE_OSS_PASSWORD
     - secure: "czpRxFlTAW7bG/IllHlJ0fMm0SNkrYV+W14LwP1Et8thIHYhkU7ugbI8v9jsgBKEMT/m1hNNMq6iV2sMQc9fqRFXyXuLw2AhvIKMJvTQJ79M7dluB8fQsH151DICNGgTnwse+bMBxYQNhL4eYBrM8syVnVtav7LGUZSB7tbZT/g="
     # GITHUB_TOKEN
-    - secure: "DklZVyzWU6hpD6HOTxcncGyuHKXrRPB6d2EIDfgECMwvnIRD6fSPEVeKSWsdOadMk7gmEghFANUdDF77FvgHagMVLb0rHc6oIsXw7CL5ga4GTSr2K++E+aaplixwlRAc+oT0nkiiZ7HAOdZPSbipoMfiBYeljqJCyN0KOWSfyWI="
+    - secure: "HrdvL9LeAioylxZaV0zXgJc7abiFQp1fycs+ERCHYjTOeVwAxsJPajhGqntcXLTBPfImb3bMwVxr+FedCHUJsw8UFcSiQVDniJOkCnqlnVMMTx+iqnsIMrAXvTacuH0yp+Bsro4Uq2lZQDS2lq40yRUZsPcSsetRfLXhu7R53Gk="
 
 matrix:
   exclude:
