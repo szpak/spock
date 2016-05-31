@@ -21,7 +21,6 @@ description = "Spock Framework"
 ext {
   variants = [2.0, 2.3, 2.4]
   variant = System.getProperty("variant") as BigDecimal ?: variants.first()
-//  variant = System.getProperty("variant") as BigDecimal ?: variants.last()
   if (variant == 2.0) {
     groovyVersion = "2.0.8"
     minGroovyVersion = "2.0.0"
@@ -64,7 +63,7 @@ scmVersion {
     versionSeparator = '/'
   }
 //TODO: Add pushReleaseCommit task next to pushTag
-//  createReleaseCommit = true	//TODO: Still needed with fileUpdate hooks?
+  createReleaseCommit = true	//TODO: Still needed with fileUpdate hooks?
   releaseCommitMessage { version, position -> "Release version: ${version}\n\n[ci skip]" }
   versionIncrementer 'incrementPrerelease'
 }
@@ -289,11 +288,11 @@ task tagRelease(type: Exec) {
 """
   git config user.email "szpak-ci@example.com"
   git config user.name "Spock Framework Robot"
-  git checkout feature/cdBetas
-  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" release/$baseVersion > /dev/null 2>&1
+  git push "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" HEAD:refs/heads/feature/cdBetas --follow-tags
 """
 //Restore `git checkout master` before merge
 //Removed 'git tag spock-$baseVersion' before push
+//git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" release/$baseVersion > /dev/null 2>&1
 }
 
 task javadoc(type: Javadoc) {
