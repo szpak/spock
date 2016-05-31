@@ -262,7 +262,7 @@ task publishJavadoc(type: Exec) {
   cp -r build/javadoc/$variantLessVersion javadoc/
   git add javadoc
   git commit -qm "Publish javadoc/$variantLessVersion"
-  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" gh-pages > /dev/null 2>&1
+  git push -q "https://\$GITHUB_TOKEN@github.com/szpak/spock.git" gh-pages > /dev/null 2>&1
   git checkout master
 """
 }
@@ -279,7 +279,7 @@ task publishDocs(type: Exec) {
   cp -r build/asciidoc/html5/* docs/$variantLessVersion
   git add docs
   git commit -qm "Publish docs/$variantLessVersion"
-  git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" gh-pages > /dev/null 2>&1
+  git push -q "https://\$GITHUB_TOKEN@github.com/szpak/spock.git" gh-pages > /dev/null 2>&1
   git checkout master
 """
 }
@@ -290,9 +290,7 @@ task tagRelease(type: Exec) {
   git config user.name "Spock Framework Robot"
   git push -q "https://\$GITHUB_TOKEN@github.com/szpak/spock.git" HEAD:refs/heads/feature/cdBetas --follow-tags > /dev/null 2>&1
 """
-//Restore `git checkout master` before merge
-//Removed 'git tag spock-$baseVersion' before push
-//git push -q "https://${System.getenv("GITHUB_TOKEN")}@github.com/szpak/spock.git" release/$baseVersion > /dev/null 2>&1
+//TODO: Replace master before merge
 }
 
 task javadoc(type: Javadoc) {
