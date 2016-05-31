@@ -40,11 +40,6 @@ ext {
   javaVersion = System.getProperty("java.specification.version") as BigDecimal
   targetJavaVersion = "1.6"
   releaseTriggeringCommand = "[#DO_RELEASE]"
-//  baseVersion = "1.1"
-//  baseVersion = project.version
-//  snapshotVersion = true
-//  fullVersion = "$baseVersion-groovy-$variant" + (snapshotVersion ? "-SNAPSHOT" : "")
-//  variantLessVersion = baseVersion + (snapshotVersion ? "-SNAPSHOT" : "")
   libs = [
     jetbrainsAnnotations: "org.jetbrains:annotations:13.0",
     ant: "org.apache.ant:ant:1.9.4",
@@ -63,14 +58,13 @@ scmVersion {
     prefix = 'release'
     versionSeparator = '/'
   }
-//TODO: Add pushReleaseCommit task next to pushTag
-  createReleaseCommit = true	//TODO: Still needed with fileUpdate hooks?
+  createReleaseCommit = true
   releaseCommitMessage { version, position -> "Release version: ${version}\n\n[ci skip]" }
   versionIncrementer 'incrementPrerelease'
 }
 
 String calculateFullVersion(String baseVersion) {
-  //TODO: Regexp na (.*)(-SNAPSHOT|) -> {1}-groovy-2.3{2}?
+  //TODO: Replace with a smart regexp like (.*)(-SNAPSHOT|) -> {1}-groovy-2.3{2}
   if (baseVersion.endsWith('-SNAPSHOT')) {
     return baseVersion - '-SNAPSHOT' + "-groovy-$variant-SNAPSHOT"
   }
@@ -80,14 +74,13 @@ String calculateFullVersion(String baseVersion) {
 ext {
   baseVersion = scmVersion.version
   fullVersion = calculateFullVersion(baseVersion)
-  //(base)version would be 1.1.0-rc1(-SNAPSHOT) - full version (used in the projects) 1.1.0-rc1-groovy-2.3(-SNAPSHOT) - maybe 
-  variantLessVersion = baseVersion	//TODO: Remove
   snapshotVersion = baseVersion.endsWith('-SNAPSHOT')
 }
 
 allprojects {
   ext.displayName = null
 
+//TODO: Restore before merge
 //  group = "org.spockframework"
   group = "info.solidsoft.spock.cdtest"
   version = fullVersion
@@ -261,11 +254,11 @@ task publishJavadoc(type: Exec) {
   git config user.name "Spock Framework Robot"
   git fetch origin +gh-pages:gh-pages
   git checkout gh-pages
-  rm -rf javadoc/$variantLessVersion
-  mkdir -p javadoc/$variantLessVersion
-  cp -r build/javadoc/$variantLessVersion javadoc/
+  rm -rf javadoc/$baseVersion
+  mkdir -p javadoc/$baseVersion
+  cp -r build/javadoc/$baseVersion javadoc/
   git add javadoc
-  git commit -qm "Publish javadoc/$variantLessVersion"
+  git commit -qm "Publish javadoc/$baseVersion"
   git push -q "https://\$GITHUB_TOKEN@github.com/szpak/spock.git" gh-pages > /dev/null 2>&1
   git checkout master
 """
@@ -278,11 +271,11 @@ task publishDocs(type: Exec) {
   git config user.name "Spock Framework Robot"
   git fetch origin +gh-pages:gh-pages
   git checkout gh-pages
-  rm -rf docs/$variantLessVersion
-  mkdir -p docs/$variantLessVersion
-  cp -r build/asciidoc/html5/* docs/$variantLessVersion
+  rm -rf docs/$baseVersion
+  mkdir -p docs/$baseVersion
+  cp -r build/asciidoc/html5/* docs/$baseVersion
   git add docs
-  git commit -qm "Publish docs/$variantLessVersion"
+  git commit -qm "Publish docs/$baseVersion"
   git push -q "https://\$GITHUB_TOKEN@github.com/szpak/spock.git" gh-pages > /dev/null 2>&1
   git checkout master
 """
@@ -298,8 +291,8 @@ task tagRelease(type: Exec) {
 }
 
 task javadoc(type: Javadoc) {
-  title "Spock Framework API Documentation ($variantLessVersion)"
-  destinationDir file("build/javadoc/$variantLessVersion")
+  title "Spock Framework API Documentation ($baseVersion)"
+  destinationDir file("build/javadoc/$baseVersion")
   source subprojects.javadoc.source
   classpath = files(subprojects.javadoc.classpath)
 }
@@ -307,9 +300,9 @@ task javadoc(type: Javadoc) {
 configureJavadoc(javadoc)
 
 task groovydoc(type: Groovydoc) {
-  docTitle "Spock Framework API Documentation ($variantLessVersion)"
-  windowTitle "Spock Framework API Documentation ($variantLessVersion)"
-  destinationDir file("build/groovydoc/$variantLessVersion")
+  docTitle "Spock Framework API Documentation ($baseVersion)"
+  windowTitle "Spock Framework API Documentation ($baseVersion)"
+  destinationDir file("build/groovydoc/$baseVersion")
   source subprojects.groovydoc.source
   classpath = files(subprojects.groovydoc.classpath)
   groovyClasspath = project(":spock-core").groovydoc.groovyClasspath

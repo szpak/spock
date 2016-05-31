@@ -55,6 +55,8 @@ uploadArchives {
       authentication(userName: System.getenv("SONATYPE_OSS_USERNAME"), password: System.getenv("SONATYPE_OSS_PASSWORD"))
     }
     repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+//TODO: Restore before merge
+      authentication(userName: System.getenv("SONATYPE_OSS_USERNAME"), password: System.getenv("SONATYPE_OSS_PASSWORD"))
       authentication(userName: System.getenv("SONATYPE_OSS_USERNAME"), password: System.getenv("SONATYPE_OSS_PASSWORD"))
     }
   }
