@@ -40,6 +40,8 @@ matrix:
 #    - jdk: openjdk7
 #      env: VARIANT=2.4
 
+before_install: "export TRAVIS_COMMIT_MSG=$(git log --format=%B -n 1 $TRAVIS_COMMIT)"
+
 install: true
 
 #Restore before merge
