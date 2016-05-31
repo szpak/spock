@@ -39,6 +39,7 @@ ext {
   }
   javaVersions = [1.7, 1.8]
   javaVersion = System.getProperty("java.specification.version") as BigDecimal
+  targetJavaVersion = "1.6"
 //  baseVersion = "1.1"
 //  baseVersion = project.version
 //  snapshotVersion = true
@@ -106,8 +107,8 @@ subprojects {
   apply plugin: "groovy"
   apply plugin: "signing"
 
-  sourceCompatibility = javaVersions.min()
-  targetCompatibility = javaVersions.min()
+  sourceCompatibility = targetJavaVersion
+  targetCompatibility = targetJavaVersion
 
   sourceSets.all { ss ->
     //TODO: Why it fails with "java.lang.String cannot be cast to java.math.BigDecimal" for -Pvariant=2.4?
